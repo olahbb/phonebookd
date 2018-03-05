@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Mar 04 21:23:46 CET 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0161-f2af-3b85-000005f75058 
+on database directory /home/balazs/Java/youtube/fxkozep/PhoneBook/phonebook with class loader sun.misc.Launcher$AppClassLoader@3d4eac69 
+Loaded from file:/home/balazs/Java/youtube/fxkozep/PhoneBook/dist/run13673484/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_161-b12
+user.dir=/home/balazs/Java/youtube/fxkozep/PhoneBook
+os.name=Linux
+os.arch=amd64
+os.version=4.13.0-36-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
