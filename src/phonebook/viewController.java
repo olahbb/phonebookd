@@ -1,8 +1,5 @@
 package phonebook;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -13,10 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.Cell;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -31,7 +27,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 public class viewController implements Initializable 
@@ -39,12 +34,12 @@ public class viewController implements Initializable
 
     @FXML
     StackPane menuPane;
-
-    @FXML
-    Pane exportPane;
     
     @FXML
     SplitPane mainSplit;
+
+    @FXML
+    Pane exportPane;
     
     @FXML
     AnchorPane anchor;
@@ -79,9 +74,15 @@ public class viewController implements Initializable
     private final String MENU_EXIT = "Kilépés";
 
     DB db = new DB();
-    
+    dialogus dialog = new dialogus();
     private final ObservableList<Person> data
             = FXCollections.observableArrayList();
+    
+    private void mainSplitSet(boolean disable, double opacity)
+        {
+        mainSplit.setDisable(disable);
+        mainSplit.setOpacity(opacity);
+        }
 
     @FXML
     private void addContact(ActionEvent event)
@@ -99,8 +100,10 @@ public class viewController implements Initializable
             }
         else
             {
-            alert("Adj meg egy valódi e-mail címet!");
-            }
+            mainSplitSet(true, 0.4);
+            dialog.alert("Adj meg egy valódi e-mail címet!", "Az e-mail címnek minimum 3 karakternek kell lennie");
+            mainSplitSet(false, 1);
+            }            
         }
     
     @FXML
@@ -116,7 +119,11 @@ public class viewController implements Initializable
             }
         
         else
-            alert("Adj meg egy fájlnevet");
+            {
+            mainSplitSet(true, 0.4);
+            dialog.alert("Adj meg egy fájlnevet",  "");
+            mainSplitSet(false, 1);
+            }
         }
     
     public void setTableData() 
@@ -191,7 +198,7 @@ public class viewController implements Initializable
                 final TableCell<Person, String> cell = new TableCell<Person, String>()
                     {
                     final Button btn = new Button("Törlés");
-                    
+                        
                     @Override
                     public void updateItem(String item, boolean empty)
                         {
@@ -206,9 +213,16 @@ public class viewController implements Initializable
                             {
                             btn.setOnAction((ActionEvent event) ->
                                     {
-                                    Person person = getTableView().getItems().get(getIndex());
-                                    data.remove(person);
-                                    db.removeContact(person);
+                                    boolean valasz = dialog.confirm("Törlés", "Biztosan törli a kontaktot?");
+                                    
+                                    if(valasz)
+                                        {
+                                        mainSplitSet(true, 0.4);
+                                        Person person = getTableView().getItems().get(getIndex());
+                                        data.remove(person);
+                                        db.removeContact(person);
+                                        mainSplitSet(false, 1); 
+                                        }
                                     }
                                 );
                                 setGraphic(btn);
@@ -281,34 +295,6 @@ public class viewController implements Initializable
                     }
                 }
             );
-        }
-    
-    private void alert(String text)
-        {
-        mainSplit.setDisable(true);
-        mainSplit.setOpacity(0.4);
-        
-        Label label = new Label(text);
-        Button alertButton = new Button("OK");
-        VBox vBox = new VBox(label, alertButton);
-        vBox.setAlignment(Pos.CENTER);
-     
-        alertButton.setOnAction(new EventHandler<ActionEvent>() 
-            {
-            @Override
-            public void handle(ActionEvent event) 
-                {
-                mainSplit.setDisable(false);
-                mainSplit.setOpacity(1);
-                
-                vBox.setVisible(false);
-                }
-            }
-        );
-        
-        anchor.getChildren().add(vBox);
-        anchor.setTopAnchor(vBox, 300.0);
-        anchor.setLeftAnchor(vBox, 300.0);
         }
     
     @Override
