@@ -1,5 +1,6 @@
 package phonebook;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Cell;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -27,6 +29,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
 
 public class viewController implements Initializable 
@@ -68,13 +71,16 @@ public class viewController implements Initializable
     @FXML
     Button exportButton;
      
+    @FXML
+    Button browsetButton;
+     
     private final String MENU_CONTACTS = "Kontaktok";
     private final String MENU_LIST = "Lista";
     private final String MENU_EXPORT = "Exportálás";
     private final String MENU_EXIT = "Kilépés";
 
     DB db = new DB();
-    dialogus dialog = new dialogus();
+    Dialogus dialog = new Dialogus();
     private final ObservableList<Person> data
             = FXCollections.observableArrayList();
     
@@ -111,7 +117,7 @@ public class viewController implements Initializable
         {
         String fileName = inputExportName.getText();
         fileName = fileName.replaceAll("\\s", "");
-        
+              
         if(fileName != null && !fileName.equals(""))
             {
             PdfGeneration pdfCreator = new PdfGeneration();
@@ -125,6 +131,17 @@ public class viewController implements Initializable
             mainSplitSet(false, 1);
             }
         }
+    
+    @FXML
+    private void browse(ActionEvent event)
+        {
+        DirectoryChooser directoryChooser = new DirectoryChooser(); 
+        directoryChooser.setTitle("Mappa választás");
+        File file = directoryChooser.showDialog(null);
+
+       if(file!=null)
+          inputExportName.setText(file.getPath());
+       }
     
     public void setTableData() 
         {
@@ -288,7 +305,10 @@ public class viewController implements Initializable
                                 exportPane.setVisible(true);
                                 break;
                             case MENU_EXIT:
-                                System.exit(0);
+                                boolean valasz = dialog.confirm("Kilépés", "Valóban kilép?");
+                                
+                                if(valasz)
+                                    System.exit(0);
                                 break;
                             }
                         }

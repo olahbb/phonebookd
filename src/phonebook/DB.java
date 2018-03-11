@@ -18,6 +18,8 @@ public class DB
     final String USERNAME=  "";
     final String PASSWORD=  "";
     
+    private Dialogus dialog = new Dialogus();
+    
     Connection conn = null;
     Statement createStatement = null;
     DatabaseMetaData dbmd = null;
@@ -62,7 +64,13 @@ public class DB
              ResultSet rs = dbmd.getTables(null,"APP", "CONTACTS", null);
             if(!rs.next())
                 {
-                createStatement.execute("create table contacts(id INT not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),lastname varchar(20), firstname varchar(20), email varchar(30))");
+                String sql = "create table contacts(id INT not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),lastname varchar(20), firstname varchar(20), email varchar(30))";
+                boolean valasz = dialog.confirm("Adatbázis nélkül nem használható az alkalmazás", "Ok: létrehozás, Cancel: kilépés!");
+                
+                if(valasz)
+                    createStatement.execute(sql);
+                else
+                    System.exit(0);
                 }
             } 
         catch (SQLException ex) 

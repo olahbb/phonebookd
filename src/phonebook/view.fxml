@@ -25,16 +25,17 @@
                <children>
                   <Pane id="exportPane" fx:id="exportPane" layoutX="234.0" layoutY="14.0" prefHeight="615.0" prefWidth="484.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button id="exportButton" fx:id="exportButton" layoutX="168.0" layoutY="176.0" mnemonicParsing="false" onAction="#exportList" text="PDF mentése" />
-                        <TextField id="inputExportName" fx:id="inputExportName" layoutX="135.0" layoutY="136.0" />
-                        <Label layoutX="203.0" layoutY="97.0" text="Fájl Neve" />
-                        <Label layoutX="117.0" layoutY="40.0" text="Exportrálás PDF-be">
+                        <Button id="exportButton" fx:id="exportButton" layoutX="213.0" layoutY="176.0" mnemonicParsing="false" onAction="#exportList" text="PDF mentése" />
+                        <TextField id="inputExportName" fx:id="inputExportName" layoutX="135.0" layoutY="136.0" prefHeight="25.0" prefWidth="238.0" />
+                        <Label layoutX="232.0" layoutY="97.0" text="Fájl Neve" />
+                        <Label layoutX="164.0" layoutY="30.0" text="Exportrálás PDF-be">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
+                        <Button id="browseButton" fx:id="browseButton" layoutX="393.0" layoutY="136.0" mnemonicParsing="false" onAction="#browse" text="Tallózás" />
                      </children></Pane>
-                  <Pane id="contactPane" fx:id="contactPane" layoutX="59.0" layoutY="45.0" prefHeight="610.0" prefWidth="500.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane id="contactPane" fx:id="contactPane" layoutX="59.0" layoutY="45.0" prefHeight="610.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <TableView id="table" fx:id="table" editable="true" layoutY="6.0" prefHeight="460.0" prefWidth="580.0">
                             <placeholder>
