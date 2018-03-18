@@ -1,10 +1,15 @@
 package phonebook;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
 public class Dialogus        
@@ -38,14 +43,13 @@ public class Dialogus
         return valasz;
         }
    
-    public void except()
+    public void kivetel(Exception ex, String hiba)
         {
         Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Exception Dialog");
-        alert.setHeaderText("Look, an Exception Dialog");
-        alert.setContentText("Could not find file blabla.txt!");
-
-        Exception ex = new FileNotFoundException("Could not find file blabla.txt");
+        alert.setTitle("Program kivétel");
+        alert.setHeaderText("Kivétel dialóg");
+        alert.setContentText(hiba);
+        alert.setResizable(true);
 
         // Create expandable Exception.
         StringWriter sw = new StringWriter();
@@ -53,8 +57,7 @@ public class Dialogus
         ex.printStackTrace(pw);
         String exceptionText = sw.toString();
 
-        Label label = new Label("The exception stacktrace was:");
-
+        Label label = new Label("Kivétel leírása:");
         TextArea textArea = new TextArea(exceptionText);
         textArea.setEditable(false);
         textArea.setWrapText(true);
@@ -69,8 +72,12 @@ public class Dialogus
         expContent.add(label, 0, 0);
         expContent.add(textArea, 0, 1);
 
+        
         // Set expandable Exception into the dialog pane.
         alert.getDialogPane().setExpandableContent(expContent);
+        
+        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node ->
+                            ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
 
         alert.showAndWait();
         }

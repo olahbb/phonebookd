@@ -33,7 +33,8 @@ public class DB
             } 
         catch (SQLException ex) 
             {
-            System.out.println("Kapcsolódási hiba: "+ex);
+            dialog.kivetel(ex, "Kapcsolódási hiba!");
+            System.out.println(ex);
             }
         
         if(conn != null)
