@@ -29,12 +29,10 @@ public class DB
         try 
             {
             conn = DriverManager.getConnection(URL);
-            System.out.println("A kapcsolat létrejött");
             } 
         catch (SQLException ex) 
             {
             dialog.kivetel(ex, "Kapcsolódási hiba!");
-            System.out.println(ex);
             }
         
         if(conn != null)
@@ -45,8 +43,7 @@ public class DB
                 } 
             catch (SQLException ex) 
                 {
-                System.out.println("Valami baj van van a createStatament (teherautó) létrehozásakor.");
-                System.out.println(""+ex);
+                dialog.kivetel(ex, "Valami baj van van a createStatament létrehozásakor.");
                 }
             }
         
@@ -56,8 +53,7 @@ public class DB
             } 
         catch (SQLException ex) 
             {
-            System.out.println("Valami baj van a DatabaseMetaData (adatbázis leírása) létrehozásakor..");
-            System.out.println(""+ex);
+            dialog.kivetel(ex, "Valami baj van a DatabaseMetaData (adatbázis leírása) létrehozásakor..");
             }
         
         try 
@@ -76,8 +72,7 @@ public class DB
             } 
         catch (SQLException ex) 
             {
-            System.out.println("Valami baj van az adattáblák létrehozásakor.");
-            System.out.println(""+ex);
+            dialog.kivetel(ex, "Valami baj van az adattáblák létrehozásakor.");
             }
         }
     
@@ -100,8 +95,7 @@ public class DB
         
         catch (Exception ex) 
             {
-            System.out.println("Valami baj van a kontaktok kiolvasásával.");
-            System.out.println(""+ex);
+            dialog.kivetel(ex, "Valami baj van a kontaktok kiolvasásával.");
             }
 
         return contacs;
@@ -120,11 +114,10 @@ public class DB
             }
         catch (SQLException ex) 
             {
-            System.out.println("Valami baj van a kontakt hozzáadásával.");
-            System.out.println(""+ex);
+            dialog.kivetel(ex, "Valami baj van a kontakt hozzáadásával.");
             }
         }
-    
+     
     public void updateContact(Person person)
         {
         try {
@@ -138,8 +131,7 @@ public class DB
             } 
         catch (SQLException ex) 
             {
-            System.out.println("Valami baj van a kontakt frissítésvel.");
-            System.out.println("" + ex);
+            dialog.kivetel(ex, "Valami baj van a kontakt frissítésvel.");
             }        
         }
     
@@ -153,8 +145,7 @@ public class DB
             } 
         catch (SQLException ex) 
             {
-            System.out.println("Valami baj van a kontakt törlésekor.");
-            System.out.println("" + ex);
+            dialog.kivetel(ex, "Valami baj van a kontakt törlésekor.");
             }        
         }
     }
